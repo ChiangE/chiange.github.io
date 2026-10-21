@@ -36,7 +36,14 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r google_scholar_crawler/requirements.txt
 
-      - name: Run
+      # Google Scholar answers GitHub runner IPs with 403/429/CAPTCHA often enough
+      # that a failing widget scrape should not turn the whole run red. main.py
+      # bounds every attempt with a hard timeout, so this step cannot spin for
+      # ~35 minutes the way the old one did.
+      - name: Fetch citation data
+        id: crawl
+        continue-on-error: true
+        timeout-minutes: 10
         env:
           GOOGLE_SCHOLAR_ID: ${{ secrets.GOOGLE_SCHOLAR_ID }}
         run: |
@@ -44,6 +51,7 @@ jobs:
           python main.py
 
       - name: Push results to google-scholar-stats
+        if: steps.crawl.outcome == 'success'
         env:
           REMOTE_REPO: https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
         run: |
@@ -58,3 +66,8 @@ jobs:
           fi
           git commit -q -m "Updated Citation Data"
           git push --quiet --force "${REMOTE_REPO}" HEAD:google-scholar-stats
+
+      - name: Report skipped update
+        if: steps.crawl.outcome != 'success'
+        run: |
+          echo "::warning::Google Scholar did not return data (runner IPs are frequently blocked with 403/429 or a CAPTCHA). The previously published citation data was left untouched and the next scheduled run will try again."
