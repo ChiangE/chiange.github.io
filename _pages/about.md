@@ -132,6 +132,7 @@ Jialin Wu, **Jiangyi Deng** (co-first), Shengyuan Pang, Yanjiao Chen, Jiayang Xu
 - *2021.03*, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet.  \| [\[video\]](https://github.com/) -->
 
 # 📖 Services
+- Reviewer of *IEEE Transactions on Pattern Analysis and Machine Intelligence (IF=20.4)*
 - Reviewer of *IEEE Transactions on Information Forensics and Security (IF=8.0)*
 - External Reviewer of "Big Four", *i.e.*, *IEEE S&P*, *USENIX Security*, *ACM CCS*, and *NDSS*
 - Reviewer of *ACM Transactions on Privacy and Security (IF=2.8)*
