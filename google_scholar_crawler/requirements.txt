@@ -1,2 +1,6 @@
-jsonpickle==1.4.2
-scholarly==1.5.1
+# bibtexparser 2.x (first released 2026-09-08) dropped the ``bibtexparser.bibdatabase``
+# module that scholarly imports, so an unpinned install breaks every scheduled run with
+# "ModuleNotFoundError: No module named 'bibtexparser.bibdatabase'". Keep it below 2.
+bibtexparser>=1.4.4,<2
+
+scholarly>=1.7.11,<1.8
